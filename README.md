@@ -10,7 +10,7 @@ A multi-agent system built with DSPy that coordinates research and writing agent
 - **FastAPI Integration**: REST API for production deployment
 - **Async Support**: Concurrent processing for better performance
 - **Type Safety**: Full type hints and mypy validation
-- **Production Ready**: Comprehensive error handling and resource management
+- **Comprehensive error handling and resource management**
 
 ## Quick Start
 
