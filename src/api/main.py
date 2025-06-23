@@ -64,6 +64,45 @@ app.add_middleware(
 )
 
 
+@app.post("/agent/demo", response_model=AgentResponse)
+async def demo_request() -> AgentResponse:
+    """Run the demo request from main.py - comprehensive AI healthcare article."""
+    try:
+        start_time = time.time()
+        agent_id = str(uuid.uuid4())
+
+        # Demo request (same as in main.py)
+        demo_query = "Write a comprehensive article about the impact of artificial intelligence on modern healthcare"
+        demo_target_audience = "healthcare professionals"
+        demo_max_sources = 10
+
+        # Process with multi-agent system
+        if coordinator is None:
+            raise HTTPException(status_code=500, detail="Coordinator not initialized")
+            
+        result = await coordinator.forward(
+            request=demo_query,
+            target_audience=demo_target_audience,
+            max_sources=demo_max_sources,
+        )
+
+        processing_time = time.time() - start_time
+
+        return AgentResponse(
+            status="success",
+            topic=result["topic"],
+            article=result["final_article"],
+            summary=result["summary"],
+            sources=result["sources"],
+            key_points=result["research_phase"]["key_points"],
+            processing_time=processing_time,
+            agent_id=agent_id,
+        )
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 @app.post("/agent/process", response_model=AgentResponse)
 async def process_request(request: AgentRequest) -> AgentResponse:
     """Process a research and writing request."""
