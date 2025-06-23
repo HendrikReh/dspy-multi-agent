@@ -10,6 +10,7 @@ A production-ready multi-agent system built with DSPy that coordinates research 
 - **FastAPI Integration**: REST API for production deployment
 - **Async Support**: Concurrent processing for better performance
 - **Type Safety**: Full type hints and mypy validation
+- **Production Ready**: Comprehensive error handling and resource management
 
 ## Quick Start
 
@@ -41,21 +42,33 @@ cp .env.example .env
 # Edit .env with your API keys
 ```
 
-4. Run the demo:
+### Running the System
+
+#### Option 1: Command Line Demo
 
 ```bash
-python src/main.py
+uv run python src/main.py
 ```
 
-### API Server
+#### Option 2: FastAPI Server
 
-Start the FastAPI server:
+**Method 1 - Direct command:**
 
 ```bash
-uvicorn src.api.main:app --host 0.0.0.0 --port 8000 --reload
+uv run uvicorn src.api.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-The API will be available at `http://localhost:8000` with interactive docs at `http://localhost:8000/docs`.
+**Method 2 - Startup script (recommended):**
+
+```bash
+python start_api.py
+```
+
+The API will be available at:
+
+- **Main API**: <http://localhost:8000>
+- **Interactive docs**: <http://localhost:8000/docs>
+- **Alternative docs**: <http://localhost:8000/redoc>
 
 ## Architecture
 
@@ -124,9 +137,29 @@ Process a research and writing request.
 
 Health check endpoint.
 
+**Response:**
+
+```json
+{
+  "status": "healthy",
+  "timestamp": "2025-06-23T14:35:10.956221",
+  "version": "1.0.0"
+}
+```
+
 ### GET /agents/status
 
 Get agent system status and configuration.
+
+**Response:**
+
+```json
+{
+  "coordinator_ready": true,
+  "model_configured": true,
+  "async_workers": 4
+}
+```
 
 ## Development
 
@@ -157,6 +190,32 @@ Install pre-commit hooks:
 ```bash
 pre-commit install
 pre-commit run --all-files
+```
+
+## Testing the API
+
+### Health Check
+
+```bash
+curl -X GET "http://localhost:8000/health"
+```
+
+### Process Request
+
+```bash
+curl -X POST "http://localhost:8000/agent/process" \
+     -H "Content-Type: application/json" \
+     -d '{
+       "query": "Write about AI in healthcare",
+       "target_audience": "healthcare professionals",
+       "max_sources": 5
+     }'
+```
+
+### Agent Status
+
+```bash
+curl -X GET "http://localhost:8000/agents/status"
 ```
 
 ## Extending the System
@@ -202,22 +261,31 @@ EXPOSE 8000
 CMD ["uvicorn", "src.api.main:app", "--host", "0.0.0.0", "--port", "8000"]
 ```
 
-### Environment Variables
+### Environment Setup
 
-Set required environment variables in your deployment environment:
+Ensure all required environment variables are set in production:
 
-- `OPENAI_API_KEY` (required)
-- `SEARCH_API_KEY` (optional)
-- Configure other variables as needed
+```bash
+export OPENAI_API_KEY="your-api-key"
+export SEARCH_API_KEY="your-search-key"  # Optional
+export MODEL_NAME="gpt-4o-mini"
+export API_HOST="0.0.0.0"
+export API_PORT="8000"
+```
 
-## Contributing
+## Recent Updates
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Run tests and code quality checks
-5. Submit a pull request
+- ✅ Fixed all import errors and path resolution issues
+- ✅ Added comprehensive type annotations (mypy compliant)
+- ✅ Implemented proper async resource management
+- ✅ Fixed FastAPI server startup issues
+- ✅ Added startup script for easier development
+- ✅ Production-ready error handling and cleanup
 
 ## License
 
-This project is licensed under the MIT License.
+[Add your license here]
+
+## Contributing
+
+[Add contribution guidelines here]
