@@ -50,7 +50,33 @@ cp .env.example .env
 uv run python src/main.py
 ```
 
-#### Option 2: FastAPI Server
+#### Option 2: FastAPI Server + Demo Client
+
+**Start the server:**
+
+```bash
+python start_api.py
+# or
+uv run uvicorn src.api.main:app --reload --host 0.0.0.0 --port 8000
+```
+
+**Run the demo via API (2 methods):**
+
+**Method 1 - Python client (recommended):**
+
+```bash
+uv run python test/demo_client.py
+```
+
+**Method 2 - Direct curl command:**
+
+```bash
+curl -X POST http://localhost:8000/agent/demo
+```
+
+#### Option 3: Custom API Requests
+
+**FastAPI Server**
 
 **Method 1 - Direct command:**
 
@@ -104,9 +130,30 @@ LOG_LEVEL=INFO
 
 ## API Endpoints
 
+### POST /agent/demo
+
+Run the built-in demo request (same as `src/main.py`).
+
+**No request body required.**
+
+**Response:**
+
+```json
+{
+  "status": "success",
+  "topic": "Write a comprehensive article about the impact of artificial intelligence on modern healthcare",
+  "article": "Full article content...",
+  "summary": "Article summary...",
+  "sources": ["source1", "source2", "..."],
+  "key_points": ["point1", "point2", "..."],
+  "processing_time": 47.2,
+  "agent_id": "uuid"
+}
+```
+
 ### POST /agent/process
 
-Process a research and writing request.
+Process a custom research and writing request.
 
 **Request Body:**
 
@@ -194,13 +241,23 @@ pre-commit run --all-files
 
 ## Testing the API
 
+### Demo Request (Built-in)
+
+```bash
+# Python client (recommended)
+uv run python test/demo_client.py
+
+# Or curl command
+curl -X POST "http://localhost:8000/agent/demo"
+```
+
 ### Health Check
 
 ```bash
 curl -X GET "http://localhost:8000/health"
 ```
 
-### Process Request
+### Custom Process Request
 
 ```bash
 curl -X POST "http://localhost:8000/agent/process" \
@@ -289,3 +346,10 @@ export API_PORT="8000"
 ## Contributing
 
 [Add contribution guidelines here]
+
+## Documentation
+
+- **API Testing Guide**: [docs/API Testing Examples.md](docs/API%20Testing%20Examples.md) - Comprehensive testing examples and curl commands
+- **Development Log**: [CLAUDE.md](CLAUDE.md) - Development history and technical notes
+- **Interactive API Docs**: <http://localhost:8000/docs> (when server is running)
+- **Alternative API Docs**: <http://localhost:8000/redoc> (when server is running)
