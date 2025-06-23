@@ -1,10 +1,11 @@
 [project]
 name = "dspy-multi-agent"
-version = "0.1.0"
+version = "0.3.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "black>=25.1.0",
     "dspy>=2.6.27",
     "fastapi>=0.115.13",
     "httpx>=0.28.1",
@@ -19,3 +20,26 @@ dev = [
     "pre-commit>=4.2.0",
     "pytest>=8.4.1",
 ]
+
+[tool.black]
+line-length = 88
+target-version = ['py39']
+
+[tool.mypy]
+python_version = "3.12"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+
+# Ignore missing imports for external libraries without stubs
+[[tool.mypy.overrides]]
+module = [
+    "dspy.*",
+    "httpx.*",
+    "pydantic.*",
+    "fastapi.*",
+    "signatures.*",
+    "agents.*", 
+    "utils.*",
+]
+ignore_missing_imports = true
