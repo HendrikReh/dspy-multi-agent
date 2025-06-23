@@ -17,20 +17,26 @@ sys.path.append(str(Path(__file__).parent.parent))
 from agents.coordinator import MultiAgentCoordinator
 from api.models import AgentRequest, AgentResponse, HealthResponse
 from utils.config import Config
+from utils.error_handling import setup_logging
 
 
 # Global variables
 coordinator: Optional[MultiAgentCoordinator] = None
 config: Optional[Config] = None
+logger = None
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     """Application lifespan manager."""
-    global coordinator, config
+    global coordinator, config, logger
 
     # Startup
     config = Config()
+    
+    # Setup logging (same as main.py)
+    logger = setup_logging(config.log_level)
+    logger.info("FastAPI server starting up...")
 
     # Configure DSPy
     lm = dspy.LM(
@@ -40,10 +46,13 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
 
     # Initialize coordinator
     coordinator = MultiAgentCoordinator(search_api_key=config.search_api_key)
+    
+    logger.info("FastAPI server startup complete")
 
     yield
 
     # Shutdown
+    logger.info("FastAPI server shutting down...")
     # Clean up resources if needed
 
 

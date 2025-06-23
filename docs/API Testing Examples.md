@@ -52,6 +52,13 @@ curl -w "Response time: %{time_total}s\n" -s -X GET "http://localhost:8000/healt
 ```
 
 ```bash
+# Bypass cache -> fresh logs from LiteLLM 
+curl -X POST http://localhost:8000/agent/process \
+  -H "Content-Type: application/json" \
+  -d '{"query": "Unique topic with timestamp: '"$(date +%s)"'"}'
+```
+
+```bash
 # Call the demo endpoint and format the JSON response
 curl -s -X POST http://localhost:8000/agent/demo \
      -H "Content-Type: application/json" | \
