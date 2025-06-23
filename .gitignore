@@ -9,3 +9,4 @@ wheels/
 # environments
 .venv
 .env
+*.log
