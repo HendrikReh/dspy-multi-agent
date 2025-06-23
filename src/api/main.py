@@ -8,9 +8,15 @@ from fastapi import FastAPI, HTTPException, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 import dspy
-from ..agents.coordinator import MultiAgentCoordinator
-from .models import AgentRequest, AgentResponse, HealthResponse
-from ..utils.config import Config
+
+# Fix imports to work with uvicorn
+import sys
+from pathlib import Path
+sys.path.append(str(Path(__file__).parent.parent))
+
+from agents.coordinator import MultiAgentCoordinator
+from api.models import AgentRequest, AgentResponse, HealthResponse
+from utils.config import Config
 
 
 # Global variables
