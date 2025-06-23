@@ -1,6 +1,6 @@
 # DSPy Multi-Agent System
 
-A production-ready multi-agent system built with DSPy that coordinates research and writing agents to produce comprehensive articles on any topic.
+A multi-agent system built with DSPy that coordinates research and writing agents to produce comprehensive articles on any topic.
 
 ## Features
 
@@ -350,6 +350,5 @@ export API_PORT="8000"
 ## Documentation
 
 - **API Testing Guide**: [docs/API Testing Examples.md](docs/API%20Testing%20Examples.md) - Comprehensive testing examples and curl commands
-- **Development Log**: [CLAUDE.md](CLAUDE.md) - Development history and technical notes
 - **Interactive API Docs**: <http://localhost:8000/docs> (when server is running)
 - **Alternative API Docs**: <http://localhost:8000/redoc> (when server is running)
