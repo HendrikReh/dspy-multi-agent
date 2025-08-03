@@ -12,3 +12,4 @@ wheels/
 *.log
 .DS_Store
 /reports
+.vscode
