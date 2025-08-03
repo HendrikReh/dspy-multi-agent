@@ -18,7 +18,7 @@ class WebSearchTool:
             self.client = AsyncTavilyClient(api_key=self.api_key)
         else:
             # Only check environment if no API key was provided
-            env_key = os.getenv("TAVILY_API_KEY") or os.getenv("SEARCH_API_KEY")
+            env_key = os.getenv("TAVILY_API_KEY")
             if env_key:
                 self.api_key = env_key
                 self.client = AsyncTavilyClient(api_key=self.api_key)

@@ -118,7 +118,7 @@ Environment variables in `.env`:
 
 ```env
 OPENAI_API_KEY=your_openai_api_key_here
-SEARCH_API_KEY=your_search_api_key_here  # Optional
+TAVILY_API_KEY=your_tavily_api_key_here  # Required for web search
 MODEL_NAME=gpt-4o-mini
 TEMPERATURE=0.7
 MAX_TOKENS=2000
@@ -324,7 +324,7 @@ Ensure all required environment variables are set in production:
 
 ```bash
 export OPENAI_API_KEY="your-api-key"
-export SEARCH_API_KEY="your-search-key"  # Optional
+export TAVILY_API_KEY="your-tavily-key"  # Required for web search
 export MODEL_NAME="gpt-4o-mini"
 export API_HOST="0.0.0.0"
 export API_PORT="8000"
