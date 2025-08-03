@@ -4,47 +4,65 @@ import httpx
 import asyncio
 from typing import List, Dict, Any, Optional
 from signatures.agent_signatures import ResearchSignature
+from tavily import AsyncTavilyClient
+import os
 
 
 class WebSearchTool:
-    """Web search tool for research agents."""
+    """Web search tool for research agents using Tavily API."""
 
     def __init__(self, api_key: Optional[str] = None) -> None:
-        self.api_key = api_key
-        self.session = httpx.AsyncClient()
+        self.api_key = api_key or os.getenv("TAVILY_API_KEY", os.getenv("SEARCH_API_KEY"))
+        if self.api_key:
+            self.client = AsyncTavilyClient(api_key=self.api_key)
+        else:
+            self.client = None
+            print("Warning: No Tavily API key provided. Search functionality disabled.")
 
     async def search(self, query: str, num_results: int = 5) -> List[Dict[str, Any]]:
-        """Search the web for information."""
-        # Example using a hypothetical search API
-        # Replace with actual search service (You.com, Serper, etc.)
+        """Search the web for information using Tavily API."""
+        if not self.client:
+            print("Search unavailable: No API key configured")
+            return []
+        
         try:
-            response = await self.session.get(
-                "https://api.search.example.com/search",
-                params={"q": query, "count": num_results},
-                headers={"Authorization": f"Bearer {self.api_key}"},
+            # Perform search using Tavily
+            response = await self.client.search(
+                query=query,
+                max_results=num_results,
+                search_depth="advanced",
+                include_answer=True,
+                include_raw_content=False,
+                include_images=False,
+                include_domains=[],
+                exclude_domains=[]
             )
-            results = response.json().get("results", [])
-            return [
-                {
+            
+            # Format results to match expected structure
+            results = []
+            for result in response.get("results", []):
+                results.append({
                     "title": result.get("title", ""),
-                    "snippet": result.get("snippet", ""),
+                    "snippet": result.get("content", ""),
                     "url": result.get("url", ""),
-                }
-                for result in results
-            ]
+                })
+            
+            # Add answer if available
+            if response.get("answer"):
+                results.insert(0, {
+                    "title": "AI-Generated Summary",
+                    "snippet": response["answer"],
+                    "url": "tavily-answer"
+                })
+            
+            return results
         except Exception as e:
             print(f"Search error: {e}")
             return []
 
     async def close(self) -> None:
-        """Explicitly close the HTTP session."""
-        if hasattr(self, "session") and not self.session.is_closed:
-            await self.session.aclose()
-
-    def __del__(self) -> None:
-        """Clean up the HTTP session."""
-        # Don't try to close async resources in __del__ as it's unreliable
-        # The session will be cleaned up by garbage collection
+        """Close the Tavily client if needed."""
+        # Tavily client handles its own cleanup
         pass
 
 

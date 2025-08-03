@@ -15,6 +15,7 @@ class Config:
         """Load configuration from environment variables."""
         self.openai_api_key = os.getenv("OPENAI_API_KEY")
         self.search_api_key = os.getenv("SEARCH_API_KEY")
+        self.tavily_api_key = os.getenv("TAVILY_API_KEY", os.getenv("SEARCH_API_KEY"))
         self.model_name = os.getenv("MODEL_NAME", "gpt-4o-mini")
         self.temperature = float(os.getenv("TEMPERATURE", "0.7"))
         self.max_tokens = int(os.getenv("MAX_TOKENS", "2000"))

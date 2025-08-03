@@ -10,6 +10,7 @@ dependencies = [
     "fastapi>=0.115.13",
     "httpx>=0.28.1",
     "openai>=1.90.0",
+    "tavily-python>=0.7.10",
     "uvicorn>=0.34.3",
 ]
 
@@ -38,8 +39,10 @@ module = [
     "httpx.*",
     "pydantic.*",
     "fastapi.*",
+    "tavily.*",
     "signatures.*",
     "agents.*", 
     "utils.*",
+    "api.*",
 ]
 ignore_missing_imports = true

@@ -21,8 +21,8 @@ async def main() -> None:
     )
     dspy.configure(lm=lm, async_max_workers=config.async_workers)
 
-    # Initialize multi-agent system
-    coordinator = MultiAgentCoordinator(config.search_api_key)
+    # Initialize multi-agent system with Tavily API key
+    coordinator = MultiAgentCoordinator(config.tavily_api_key)
 
     # Example request
     request = "Write a comprehensive article about the impact of artificial intelligence on modern healthcare"
