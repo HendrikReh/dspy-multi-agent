@@ -1,0 +1,99 @@
+{
+  "timestamp": "20250803_133845",
+  "models_tested": [],
+  "queries": [
+    {
+      "id": "tech_simple",
+      "request": "Explain how blockchain technology works in simple terms",
+      "target_audience": "general public",
+      "max_sources": 3,
+      "complexity": "low"
+    },
+    {
+      "id": "tech_complex",
+      "request": "Analyze the technical challenges and solutions for implementing post-quantum cryptography in existing blockchain systems",
+      "target_audience": "cryptography researchers",
+      "max_sources": 10,
+      "complexity": "high"
+    },
+    {
+      "id": "science_medium",
+      "request": "Discuss recent breakthroughs in CRISPR gene editing and their ethical implications",
+      "target_audience": "science journalists",
+      "max_sources": 7,
+      "complexity": "medium"
+    },
+    {
+      "id": "business_analysis",
+      "request": "Evaluate the impact of AI on workforce transformation in the financial services industry",
+      "target_audience": "business executives",
+      "max_sources": 8,
+      "complexity": "medium"
+    },
+    {
+      "id": "creative_task",
+      "request": "Write a compelling narrative about the future of human-AI collaboration in creative industries",
+      "target_audience": "creative professionals",
+      "max_sources": 5,
+      "complexity": "medium"
+    }
+  ],
+  "results": [
+    {
+      "query": {
+        "id": "tech_simple",
+        "request": "Explain how blockchain technology works in simple terms",
+        "target_audience": "general public",
+        "max_sources": 3,
+        "complexity": "low"
+      },
+      "model_results": {},
+      "timestamp": "2025-08-03T13:38:45.801071"
+    },
+    {
+      "query": {
+        "id": "tech_complex",
+        "request": "Analyze the technical challenges and solutions for implementing post-quantum cryptography in existing blockchain systems",
+        "target_audience": "cryptography researchers",
+        "max_sources": 10,
+        "complexity": "high"
+      },
+      "model_results": {},
+      "timestamp": "2025-08-03T13:38:45.801143"
+    },
+    {
+      "query": {
+        "id": "science_medium",
+        "request": "Discuss recent breakthroughs in CRISPR gene editing and their ethical implications",
+        "target_audience": "science journalists",
+        "max_sources": 7,
+        "complexity": "medium"
+      },
+      "model_results": {},
+      "timestamp": "2025-08-03T13:38:45.801203"
+    },
+    {
+      "query": {
+        "id": "business_analysis",
+        "request": "Evaluate the impact of AI on workforce transformation in the financial services industry",
+        "target_audience": "business executives",
+        "max_sources": 8,
+        "complexity": "medium"
+      },
+      "model_results": {},
+      "timestamp": "2025-08-03T13:38:45.801261"
+    },
+    {
+      "query": {
+        "id": "creative_task",
+        "request": "Write a compelling narrative about the future of human-AI collaboration in creative industries",
+        "target_audience": "creative professionals",
+        "max_sources": 5,
+        "complexity": "medium"
+      },
+      "model_results": {},
+      "timestamp": "2025-08-03T13:38:45.801318"
+    }
+  ],
+  "performance_summary": {}
+}
