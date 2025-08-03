@@ -5,7 +5,7 @@ A multi-agent system built with DSPy that coordinates research and writing agent
 ## Features
 
 - **Multi-Agent Architecture**: Coordinated research and writing agents working together
-- **Web Search Integration**: Automated research using web search APIs
+- **Web Search Integration**: Automated research using Tavily search API
 - **DSPy Framework**: Leveraging DSPy for structured AI workflows
 - **FastAPI Integration**: REST API for production deployment
 - **Async Support**: Concurrent processing for better performance
@@ -18,7 +18,7 @@ A multi-agent system built with DSPy that coordinates research and writing agent
 
 - Python 3.12+
 - OpenAI API key
-- Optional: Web search API key (for enhanced research capabilities)
+- Tavily API key (for web search functionality) - Get one at https://tavily.com
 
 ### Installation
 
