@@ -1,0 +1,9 @@
+{
+  "models": [
+    "gpt-4o",
+    "gpt-4o-mini"
+  ],
+  "default_query": "Explain artificial intelligence",
+  "default_audience": "technical professionals",
+  "default_sources": 3
+}

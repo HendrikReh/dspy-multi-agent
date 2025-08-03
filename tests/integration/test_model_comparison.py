@@ -17,6 +17,7 @@ from agents.metrics_coordinator import MetricsCoordinator
 from utils.performance_metrics import PerformanceTracker, ModelComparison
 from utils.output_comparison import compare_outputs, print_comparison_summary, generate_diff
 from utils.config import Config
+from utils.report_generator import ComprehensiveReportGenerator
 
 
 @pytest.mark.integration
@@ -50,7 +51,7 @@ class TestModelComparison:
             },
         ]
     
-    async def run_model_test(self, model_name: str, query: dict, config: Config, tracker: PerformanceTracker, display_name: str = None) -> dict:
+    async def run_model_test(self, model_name: str, query: dict, config: Config, tracker: PerformanceTracker, display_name: str = None, report_generator=None) -> dict:
         """Run a single model test."""
         display_name = display_name or model_name
         print(f"\n{'='*60}")
@@ -90,6 +91,12 @@ class TestModelComparison:
                 max_sources=query["max_sources"],
             )
             
+            # Capture full LLM output if report generator is active
+            if report_generator and result:
+                # Use the actual final article as the LLM output
+                llm_output = result.get('final_article', 'No article generated')
+                report_generator.add_test_result(display_name, query, result, llm_output)
+            
             # Print basic metrics
             metrics = result["metrics"]
             print(f"\nPerformance Metrics for {display_name}:")
@@ -111,7 +118,7 @@ class TestModelComparison:
             await coordinator.close()
             raise
     
-    async def test_openai_models_comparison(self, config, test_queries):
+    async def test_openai_models_comparison(self, config, test_queries, generate_report=True):
         """Compare OpenAI models on multiple queries."""
         # Skip if no API key
         if not config.openai_api_key:
@@ -119,6 +126,9 @@ class TestModelComparison:
         
         # Suppress dspy forward() warnings
         warnings.filterwarnings("ignore", message=r".*forward\(\) directly is discouraged.*")
+        
+        # Initialize report generator if requested
+        report_generator = ComprehensiveReportGenerator() if generate_report else None
         
         # Models to compare: gpt-4o, gpt-4o-mini, o4-mini, o3-mini, o3
         models = ["gpt-4o", "gpt-4o-mini", "o4-mini", "o3-mini", "o3"]
@@ -151,7 +161,7 @@ class TestModelComparison:
                         print(f"\nNote: Using {actual_model} as placeholder for {model}")
                     
                     # Run test with actual model but store under original name
-                    result = await self.run_model_test(actual_model, query, config, tracker, display_name=model)
+                    result = await self.run_model_test(actual_model, query, config, tracker, display_name=model, report_generator=report_generator)
                     results[model] = result
                     
                 except Exception as e:
@@ -190,6 +200,10 @@ class TestModelComparison:
                             "comparison": comparison,
                             "diff": diff,
                         })
+                        
+                        # Add to report generator
+                        if report_generator:
+                            report_generator.add_comparison(model_a, model_b, comparison)
         
         # Overall performance comparison
         if len(all_comparisons) > 0:
@@ -226,6 +240,11 @@ class TestModelComparison:
             
             # Save detailed results
             self.save_results(all_comparisons, model_comparisons)
+            
+            # Generate comprehensive report
+            if report_generator:
+                report_path = report_generator.generate_html_report()
+                print(f"\nComprehensive report available at: {report_path}")
     
     def save_results(self, comparisons: list, performance_comparisons: list):
         """Save test results to file."""
@@ -324,4 +343,5 @@ if __name__ == "__main__":
         }
     ]
     
-    asyncio.run(test_instance.test_openai_models_comparison(config, test_queries))
+    # Run with report generation enabled
+    asyncio.run(test_instance.test_openai_models_comparison(config, test_queries, generate_report=True))

@@ -118,7 +118,7 @@ class ResultsVisualizer:
         ax3.set_xticklabels(capability_order)
         ax3.set_title("Performance by Capability Level")
         
-        # 4. O3 vs O4 Family Comparison
+        # 4. O3 vs o4 Family Comparison
         ax4 = axes[1, 1]
         family_comparison = df.groupby('family').agg({
             'time_to_first_token': ['mean', 'std'],
@@ -142,11 +142,11 @@ class ResultsVisualizer:
         width = 0.35
         
         ax4.bar(x - width/2, o3_means, width, label='O3 Family', color='#FF6B6B')
-        ax4.bar(x + width/2, o4_means, width, label='O4 Family', color='#4ECDC4')
+        ax4.bar(x + width/2, o4_means, width, label='o4 Family', color='#4ECDC4')
         
         ax4.set_xlabel('Metric')
         ax4.set_ylabel('Value')
-        ax4.set_title('O3 vs O4 Family Comparison')
+        ax4.set_title('O3 vs o4 Family Comparison')
         ax4.set_xticks(x)
         ax4.set_xticklabels(metrics)
         ax4.legend()

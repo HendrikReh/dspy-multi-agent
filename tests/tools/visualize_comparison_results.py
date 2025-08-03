@@ -125,7 +125,7 @@ class ComparisonVisualizer:
         from matplotlib.patches import Patch
         legend_elements = [
             Patch(facecolor='#4ECDC4', label='GPT Models'),
-            Patch(facecolor='#FF6B6B', label='O3/O4 Models')
+            Patch(facecolor='#FF6B6B', label='O3/o4 Models')
         ]
         ax4.legend(handles=legend_elements, loc='upper right')
         

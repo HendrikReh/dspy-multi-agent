@@ -1,0 +1,8 @@
+{
+  "models": [
+    "gpt-4o-mini"
+  ],
+  "default_query": "Write a comprehensive article about the impact of artificial intelligence on modern healthcare",
+  "default_audience": "general audience",
+  "default_sources": 5
+}

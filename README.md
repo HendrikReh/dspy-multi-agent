@@ -330,6 +330,56 @@ export API_HOST="0.0.0.0"
 export API_PORT="8000"
 ```
 
+## Model Comparison and Testing
+
+### Running Model Comparisons
+
+Compare multiple AI models with comprehensive reporting:
+
+```bash
+# Run with default configuration (models from model_comparison_config.json)
+uv run python tests/models_batch_run/run_model_comparison_with_report.py
+
+# Use custom configuration file
+uv run python tests/models_batch_run/run_model_comparison_with_report.py --config custom_config.json
+
+# Override specific parameters
+uv run python tests/models_batch_run/run_model_comparison_with_report.py --models gpt-4o o3-mini --query "Explain quantum computing"
+```
+
+### Model Configuration
+
+Models are configured in `model_comparison_config.json`:
+
+```json
+{
+  "models": ["gpt-4o-mini"],  // Models to compare
+  "default_query": "Write a comprehensive article about the impact of artificial intelligence on modern healthcare",
+  "default_audience": "general audience",
+  "default_sources": 5
+}
+```
+
+### Test Reports
+
+Model comparison tests generate comprehensive HTML reports in the `reports/` directory including:
+- Performance metrics and visualizations (performance charts, heatmaps, speedup matrices)
+- Token usage and speed comparisons
+- Side-by-side output comparisons with similarity metrics
+- Full LLM outputs for each model (actual responses, not placeholders)
+- Detailed phase timing breakdowns (planning, research, writing)
+- Cross-model similarity analysis with key points extraction
+
+Report structure:
+```
+reports/
+└── model_comparison_YYYYMMDD_HHMMSS/
+    ├── report_YYYYMMDD_HHMMSS.html     # Main comprehensive report
+    ├── llm_outputs/                     # Raw model outputs
+    ├── visualizations/                  # Generated charts and graphs
+    └── data/                           # JSON data files
+```
+
 ## Recent Updates
 
 - ✅ Fixed all import errors and path resolution issues
@@ -338,17 +388,36 @@ export API_PORT="8000"
 - ✅ Fixed FastAPI server startup issues
 - ✅ Added startup script for easier development
 - ✅ Production-ready error handling and cleanup
+- ✅ Added model comparison framework with comprehensive reporting
+- ✅ External configuration file support for model testing
+- ✅ Fixed LLM output capture to save actual model responses
 
 ## License
 
-[Add your license here]
+GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007 (see LICENSE)
 
 ## Contributing
 
 [Add contribution guidelines here]
 
+## Visualization Tools
+
+The project includes tools for visualizing test results:
+
+```bash
+# Generate visualizations from test results
+uv run python tests/tools/visualize_results.py
+
+# Compare specific model results
+uv run python tests/tools/visualize_comparison_results.py
+```
+
 ## Documentation
 
 - **API Testing Guide**: [docs/API Testing Examples.md](docs/API%20Testing%20Examples.md) - Comprehensive testing examples and curl commands
+- **Model Comparison Guide**: [docs/model_comparison.md](docs/model_comparison.md) - Detailed guide for model testing
+- **Test Organization**: [docs/test_organization.md](docs/test_organization.md) - Test structure and usage
+- **Visualization Guide**: [docs/visualization_guide.md](docs/visualization_guide.md) - Using visualization tools
+- **Report Generation Guide**: [docs/comprehensive_report_guide.md](docs/comprehensive_report_guide.md) - Understanding test reports
 - **Interactive API Docs**: <http://localhost:8000/docs> (when server is running)
 - **Alternative API Docs**: <http://localhost:8000/redoc> (when server is running)

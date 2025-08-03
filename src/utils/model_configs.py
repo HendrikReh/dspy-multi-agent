@@ -7,8 +7,8 @@ from enum import Enum
 
 class ModelFamily(Enum):
     """Model family types."""
-    O3 = "o3"
-    O4 = "o4"
+    o3 = "o3"
+    o4 = "o4"
     GPT4 = "gpt-4"  # For current testing
 
 
@@ -46,8 +46,8 @@ class ModelConfig:
         """Get default performance expectations based on model type."""
         # These are hypothetical values for o3/o4 models
         base_times = {
-            ModelFamily.O3: {"first_token": 0.5, "tokens_per_sec": 50},
-            ModelFamily.O4: {"first_token": 0.3, "tokens_per_sec": 80},
+            ModelFamily.o3: {"first_token": 0.5, "tokens_per_sec": 50},
+            ModelFamily.o4: {"first_token": 0.3, "tokens_per_sec": 80},
             ModelFamily.GPT4: {"first_token": 0.8, "tokens_per_sec": 40},
         }
         
@@ -75,7 +75,7 @@ MODEL_CONFIGS = {
     # O3 family (with reasoning model requirements)
     "o3": ModelConfig(
         name="o3",
-        family=ModelFamily.O3,
+        family=ModelFamily.o3,
         size=ModelSize.FULL,
         capability=ModelCapability.FULL,
         api_name="o3",
@@ -84,7 +84,7 @@ MODEL_CONFIGS = {
     ),
     "o3-mini-low": ModelConfig(
         name="o3-mini-low",
-        family=ModelFamily.O3,
+        family=ModelFamily.o3,
         size=ModelSize.MINI,
         capability=ModelCapability.LOW,
         api_name="o3-mini",
@@ -93,7 +93,7 @@ MODEL_CONFIGS = {
     ),
     "o3-mini-medium": ModelConfig(
         name="o3-mini-medium",
-        family=ModelFamily.O3,
+        family=ModelFamily.o3,
         size=ModelSize.MINI,
         capability=ModelCapability.MEDIUM,
         api_name="o3-mini",
@@ -102,7 +102,7 @@ MODEL_CONFIGS = {
     ),
     "o3-mini-high": ModelConfig(
         name="o3-mini-high",
-        family=ModelFamily.O3,
+        family=ModelFamily.o3,
         size=ModelSize.MINI,
         capability=ModelCapability.HIGH,
         api_name="o3-mini",
@@ -110,10 +110,10 @@ MODEL_CONFIGS = {
         max_tokens=20000,  # Minimum for reasoning models
     ),
     
-    # O4 family (with reasoning model requirements)
+    # o4 family (with reasoning model requirements)
     "o4": ModelConfig(
         name="o4",
-        family=ModelFamily.O4,
+        family=ModelFamily.o4,
         size=ModelSize.FULL,
         capability=ModelCapability.FULL,
         api_name="o4",
@@ -122,7 +122,7 @@ MODEL_CONFIGS = {
     ),
     "o4-mini-low": ModelConfig(
         name="o4-mini-low",
-        family=ModelFamily.O4,
+        family=ModelFamily.o4,
         size=ModelSize.MINI,
         capability=ModelCapability.LOW,
         api_name="o4-mini",
@@ -131,7 +131,7 @@ MODEL_CONFIGS = {
     ),
     "o4-mini-medium": ModelConfig(
         name="o4-mini-medium",
-        family=ModelFamily.O4,
+        family=ModelFamily.o4,
         size=ModelSize.MINI,
         capability=ModelCapability.MEDIUM,
         api_name="o4-mini",
@@ -140,7 +140,7 @@ MODEL_CONFIGS = {
     ),
     "o4-mini-high": ModelConfig(
         name="o4-mini-high",
-        family=ModelFamily.O4,
+        family=ModelFamily.o4,
         size=ModelSize.MINI,
         capability=ModelCapability.HIGH,
         api_name="o4-mini",
