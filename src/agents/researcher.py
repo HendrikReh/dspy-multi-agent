@@ -12,12 +12,19 @@ class WebSearchTool:
     """Web search tool for research agents using Tavily API."""
 
     def __init__(self, api_key: Optional[str] = None) -> None:
-        self.api_key = api_key or os.getenv("TAVILY_API_KEY", os.getenv("SEARCH_API_KEY"))
+        # Use provided API key, don't fall back to environment if one is provided
+        self.api_key = api_key
         if self.api_key:
             self.client = AsyncTavilyClient(api_key=self.api_key)
         else:
-            self.client = None
-            print("Warning: No Tavily API key provided. Search functionality disabled.")
+            # Only check environment if no API key was provided
+            env_key = os.getenv("TAVILY_API_KEY") or os.getenv("SEARCH_API_KEY")
+            if env_key:
+                self.api_key = env_key
+                self.client = AsyncTavilyClient(api_key=self.api_key)
+            else:
+                self.client = None
+                print("Warning: No Tavily API key provided. Search functionality disabled.")
 
     async def search(self, query: str, num_results: int = 5) -> List[Dict[str, Any]]:
         """Search the web for information using Tavily API."""

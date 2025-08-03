@@ -35,3 +35,6 @@ class Config:
 
         if self.temperature < 0 or self.temperature > 2:
             raise ValueError("Temperature must be between 0 and 2")
+        
+        if not self.tavily_api_key:
+            print("Warning: TAVILY_API_KEY not configured. Web search functionality will be disabled.")

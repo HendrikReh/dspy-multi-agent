@@ -9,9 +9,9 @@ from agents.writer import WriterAgent
 class MultiAgentCoordinator(dspy.Module):
     """Coordinates researcher and writer agents."""
 
-    def __init__(self, search_api_key: Optional[str] = None) -> None:
+    def __init__(self, tavily_api_key: Optional[str] = None) -> None:
         super().__init__()
-        search_tool = WebSearchTool(search_api_key) if search_api_key else None
+        search_tool = WebSearchTool(tavily_api_key) if tavily_api_key else None
         self.researcher = ResearchAgent(search_tool)
         self.writer = WriterAgent()
 

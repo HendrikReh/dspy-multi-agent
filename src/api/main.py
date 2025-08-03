@@ -45,7 +45,7 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     dspy.configure(lm=lm, async_max_workers=4)
 
     # Initialize coordinator with Tavily API key
-    coordinator = MultiAgentCoordinator(search_api_key=config.tavily_api_key)
+    coordinator = MultiAgentCoordinator(tavily_api_key=config.tavily_api_key)
     
     logger.info("FastAPI server startup complete")
 
